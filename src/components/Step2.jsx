@@ -21,8 +21,7 @@ export default function Step3({ onNext, onBack }) {
                 <Form.Select aria-label="">
                     {/* <option>What best describes you</option> */}
                     <option value="1">Supplier</option>
-                    <option value="2">Project Manager</option>
-                    <option value="3">Procurement Specialist</option>
+                    <option value="2">Customer</option>
                 </Form.Select>
                 
             </Col>
