@@ -1,0 +1,84 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+h1{
+    color: white;
+}
+/* .App{
+    font-family: sans-serif;
+    color: white;
+    background-image: url(./assets/cover4.jpg);
+    max-height: 100vh;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+} */
+
+
+.cover-video-wrapper {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+  
+.cover-video {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+  
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* black with 50% opacity */
+    z-index: -1;
+}
+
+
+.form-wrapper{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 80vh;
+    color: white;
+}
+
+.step-header span{
+    color: rgba(119, 221, 72, 0.733);
+}
+
+/* src/App.css */
+
+.vertical-text-wrapper {
+  display: inline-block;
+  height: 1.2em; /* Adjust height to match the height of one word */
+  overflow: hidden; /* Hide overflowing text */
+  vertical-align: bottom;
+  position: relative;
+}
+
+.vertical-text {
+  display: flex;
+  flex-direction: column;
+  transition: transform 1s ease-in-out; /* Smooth transition */
+}
+
+.word {
+  height: 1.2em; /* Match the height of the wrapper */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
