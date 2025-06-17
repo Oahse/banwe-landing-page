@@ -7,7 +7,7 @@ function Header({ setCurrentComponent }) {
     <div style={{ width: "100%" }}>
       <Navbar className="" variant="dark">
         <Container>
-          <Navbar.Brand href="/">
+          <Navbar.Brand href="/banwe-landing-page/">
             <img src={logo} alt="oahse Logo" width="120px" />
           </Navbar.Brand>
           <Navbar.Collapse className="justify-content-end">
