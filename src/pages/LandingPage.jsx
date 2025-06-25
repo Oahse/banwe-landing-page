@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from 'react-router-dom'
 import Header from "../components/Header";
 import CoverVideo from "../assets/cover-video.mp4";
 import Step1 from "../components/Step1";
@@ -16,6 +17,17 @@ function LandingPage() {
   const CurrentStep = steps[step];
 
   const [currentComponent, setCurrentComponent] = useState("Home"); // Track the current component
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+   useEffect(() => {
+    if (location.state?.showAccessStep) {
+      setCurrentComponent("AccessStep");
+      // Clean up state so it doesn't persist on refresh or further navigation
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location, navigate]);
 
   const submitForm = () => {
     console.log("Form submitted");
