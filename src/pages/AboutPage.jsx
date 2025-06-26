@@ -45,7 +45,7 @@ function AboutPage() {
                             Today, Banwe stands as a bridge between Africa’s rich heritage and global consumers, ensuring that every purchase supports sustainable practices and uplifts communities.
                         </p>
                     </Col>
-                    <Col sm={12} md={6} lg={6} className='text-center mt-5'>
+                    <Col sm={12} md={6} lg={6} className='text-center mt-5 d-none d-md-block'>
                         <div> <img src={CoverPhoto} alt="Cover" width='100%'/></div>  
                     </Col>
                 </Row>

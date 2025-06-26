@@ -15,7 +15,7 @@ function Header({ setCurrentComponent }) {
           </Navbar.Brand>
           <Nav className="me-auto">
             {location.pathname === "/about" && (
-              <Nav.Link as={Link} to='/'>Let's get you started</Nav.Link>
+              <Nav.Link as={Link} to='/'>Get Started</Nav.Link>
             )}
             <Nav.Link as={Link} to='/about'>About</Nav.Link>
           </Nav>
