@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Button } from 'react-bootstrap'
 
-export default function Step2() {
+export default function FinalStep() {
   return (
    <Row>
         <Col sm={12} md={12} lg={12} className="mb-3">
@@ -11,7 +11,12 @@ export default function Step2() {
             </p>
         </Col>
         <Col className="mb-3">
-            <Button variant="success" className="mb-3" href="https://www.google.com">Stay Tuned</Button>
+            <Button
+                as="input"
+                type="submit"
+                value="Stay Tuned"
+                className="tf-btn radius-3 btn-fill animate-hover-btn justify-content-center"
+                />
         </Col>
         
    </Row>

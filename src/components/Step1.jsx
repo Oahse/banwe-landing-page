@@ -1,59 +1,60 @@
-import React, { useEffect, useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { useState } from "react";
+import { Form, Button, Row, Col } from "react-bootstrap";
+import { getNames } from "country-list";
 
-export default function Step1({ onNext }) {
-  const [index, setIndex] = useState(0);
-  const words = ["Quality", "Organic", "Natural",];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % words.length); // Loop through words
-    }, 2000); // 4 seconds pause + 1 second transition
+export default function Step1({ onNext, onBack }) {
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const countries = getNames(); // Get all country names
 
-    return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, [words.length]);
-
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (selectedCountry) {
+      onNext();
+    } else {
+      alert("Please select a country.");
+    }
+  };
   return (
     <Form
-      onSubmit={(e) => {
-        e.preventDefault();
-        onNext();
-      }}
+      onSubmit={handleSubmit}
       className="text-center"
     >
-      <h1 className="step-header">
-        Home to 
-        <span className="vertical-text-wrapper mx-2">
-          <span
-            className="vertical-text"
-            style={{
-              transform: `translateY(-${index * 1.22}em)`,
-              transition: "transform 1s ease-in-out", // Smooth transition
-            }}
-          >
-            {words.map((word, i) => (
-              <div key={i} className="word">
-                {word}
-              </div>
-            ))}
-          </span>
-        </span>
-       African Products
-      </h1>
+      <Row>
+            <Col sm={12} md={12} lg={12} className="text-start">
+                <Button type="button" onClick={onBack} className="rounded-5" variant="outline-light">
+                    <i class="bi bi-arrow-90deg-left"></i>
+                </Button>
+            </Col>
 
-      <p>The biggest platform for international trade of handpicked, Purely Organic African Products.</p>
-      <div className="text-center" >
-      <Form.Control
-        type="email"
-        size="md"
-        placeholder="Input your Email"
-        required
-        className="mb-3"
-        // style={{width: "506px"}}
-      />
-      </div>
+            <Col sm={12} md={12} lg={12} className="mb-3">
+                <h4 className="step-header">
+                  What is your Country of residence
+                </h4>
+
+                <Form.Select
+                  value={selectedCountry}
+                  onChange={(e) => setSelectedCountry(e.target.value)}
+                  required
+                >
+                  <option value="">-- Select a country --</option>
+                  {countries.map((country, i) => (
+                    <option key={i} value={country}>
+                      {country}
+                    </option>
+                  ))}
+                </Form.Select>
+                          
+            </Col>
+
+            <Col sm={12} md={12} lg={12}>
+                  <Button as="input" type="submit" value="Continue" className="tf-btn radius-3 btn-fill animate-hover-btn justify-content-center" />
+    
+            </Col>
+        </Row>
       
-      <Button as="input" type="submit" value="Start here" />
+      
     </Form>
   );
 }

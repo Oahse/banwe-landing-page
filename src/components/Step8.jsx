@@ -1,25 +1,21 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Form, Button, Row, Col, ButtonGroup, ToggleButton } from "react-bootstrap";
 
-export default function Step3({ onNext, onBack }) {
-  const ageGroups = [
-    "Under 18",
-    "18–24",
-    "25–34",
-    "35–44",
-    "45–54",
-    "55 and above",
-  ];
+export default function Step8({ onNext, onBack }) {
+  const options = ["Yes", "No", "Maybe"];
+  const [selected, setSelected] = useState("");
 
-  const [selected, setSelected] = useState(""); // Single value
+  const handleToggle = (value) => {
+    setSelected(value);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!selected) {
-      alert("Please select your age group.");
+      alert("Please select an option.");
       return;
     }
-    onNext(); // or pass selected with onSubmit(selected)
+    onNext(); // Or pass selected if needed
   };
 
   return (
@@ -36,21 +32,24 @@ export default function Step3({ onNext, onBack }) {
           </Button>
         </Col>
 
-        <Col sm={12} className="mb-3">
-          <h4 className="step-header">Select your Age Group</h4>
+        <Col sm={12} className="mb-4">
+          <p className="step-header">
+            If there was a platform that gives you the opportunity to get culturally specific products from Africa, <br/> 
+            maintaining their authenticity and delivered with cheaper logistics, would you be interested in using it?
+          </p>
 
-          {ageGroups.map((group, idx) => (
+          {options.map((option, idx) => (
             <ButtonGroup key={idx} className="mb-2 me-2">
               <ToggleButton
                 id={`toggle-${idx}`}
                 type="radio"
-                variant={selected === group ? "dark" : "outline-secondary"}
-                name="ageGroup"
-                value={group}
-                checked={selected === group}
-                onChange={(e) => setSelected(e.currentTarget.value)}
+                variant={selected === option ? "dark" : "outline-secondary"}
+                name="interest"
+                value={option}
+                checked={selected === option}
+                onChange={() => handleToggle(option)}
               >
-                {group}
+                {option}
               </ToggleButton>
             </ButtonGroup>
           ))}

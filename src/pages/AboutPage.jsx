@@ -28,7 +28,8 @@ function AboutPage() {
                     </Col>
 
                     <Col className='mt-3' lg={12} md={12} sm={12} xs={12}>
-                        <Button as={Link} to='/'  variant='success' className='p-3 rounded-5'> Let's get you started</Button>
+                        
+                        <Button as={Link} to='/'  variant='success' className="tf-btn radius-3 btn-fill animate-hover-btn justify-content-center"> Let's get you started</Button>
                     </Col>
                     
                 </Row>
@@ -72,10 +73,24 @@ function AboutPage() {
                     </Col>
 
                     <Col sm={12} md={12} lg={12} className='mt-3 '>
-                        <Button href='https://www.facebook.com' variant='outline-dark' className='p-3 rounded-5 me-2' size='lg'><i class="bi bi-facebook"></i></Button>
-                        <Button as={Link} to='https://www.instagram.com' variant='outline-dark' className='p-3 rounded-5 me-2' size='lg'><i class="bi bi-instagram"></i></Button>
-                        <Button as={Link} to='https://www.linkedin.com' variant='outline-dark' className='p-3 rounded-5 me-2' size='lg'><i class="bi bi-linkedin"></i></Button>
-                        <Button as={Link} to='https://www.x.com' variant='outline-dark' className='p-3 rounded-5 me-2' size='lg'><i class="bi bi-twitter-x"></i></Button>
+                        <Button href='https://www.facebook.com' variant='outline-dark' className='tf-btn radius-3 btn-fill animate-hover-btn justify-content-center me-2' size='lg'><i class="bi bi-facebook"></i></Button>
+                        <Button as={Link} to='https://www.instagram.com' variant='outline-dark' className='tf-btn radius-3 btn-fill animate-hover-btn justify-content-center me-2' size='lg'><i class="bi bi-instagram"></i></Button>
+                        <Button as={Link} to='https://www.linkedin.com' variant='outline-dark' className='tf-btn radius-3 btn-fill animate-hover-btn justify-content-center me-2' size='lg'><i class="bi bi-linkedin"></i></Button>
+                        <Button as={Link} to='https://www.x.com' variant='outline-dark' className='tf-btn radius-3 btn-fill animate-hover-btn justify-content-center me-2' size='lg'><i class="bi bi-twitter-x"></i></Button>
+                        <Button href='https://www.tiktok.com' variant='outline-dark' className='tf-btn radius-3 btn-fill animate-hover-btn justify-content-center me-2' size='lg'>
+                            <i className="bi bi-tiktok"></i>
+                        </Button>
+                        {/* <Button href='https://www.youtube.com' variant='outline-dark' className='tf-btn radius-3 btn-fill animate-hover-btn justify-content-center me-2' size='lg'>
+                            <i className="bi bi-youtube"></i>
+                        </Button>
+                        <Button href='https://wa.me/1234567890' variant='outline-dark' className='tf-btn radius-3 btn-fill animate-hover-btn justify-content-center me-2' size='lg'>
+                            <i className="bi bi-whatsapp"></i>
+                        </Button>
+                        <Button href='https://t.me/yourchannel' variant='outline-dark' className='tf-btn radius-3 btn-fill animate-hover-btn justify-content-center me-2' size='lg'>
+                            <i className="bi bi-telegram"></i>
+                        </Button> */}
+
+
                     </Col>
                 </Row>
             </Container>
@@ -84,7 +99,7 @@ function AboutPage() {
             <Container>
                 <Row>
                     <Col className="text-center">
-                        <p className="mt-3">© 2025 Banwe. All rights reserved.</p>
+                        <p className="mt-3">© 2025 Banwee. All rights reserved.</p>
                     </Col>
                 </Row>
             </Container>

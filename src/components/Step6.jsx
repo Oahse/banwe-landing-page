@@ -1,25 +1,20 @@
 import React, { useState } from "react";
 import { Form, Button, Row, Col, ButtonGroup, ToggleButton } from "react-bootstrap";
 
-export default function Step3({ onNext, onBack }) {
-  const ageGroups = [
-    "Under 18",
-    "18–24",
-    "25–34",
-    "35–44",
-    "45–54",
-    "55 and above",
+export default function Step6({ onNext, onBack }) {
+  const frequencyOptions = [
+    "Weekly",
+    "Monthly",
+    "Occasionally",
+    "Rarely",
+    "Daily",
   ];
 
-  const [selected, setSelected] = useState(""); // Single value
+  const [selected, setSelected] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!selected) {
-      alert("Please select your age group.");
-      return;
-    }
-    onNext(); // or pass selected with onSubmit(selected)
+    onNext(); // Or send selected value up if needed
   };
 
   return (
@@ -37,20 +32,23 @@ export default function Step3({ onNext, onBack }) {
         </Col>
 
         <Col sm={12} className="mb-3">
-          <h4 className="step-header">Select your Age Group</h4>
-
-          {ageGroups.map((group, idx) => (
+          <small> Optional </small>
+          <h2 className="step-header">
+            If yes, How often do you try to source such products?
+          </h2>
+          
+          {frequencyOptions.map((option, idx) => (
             <ButtonGroup key={idx} className="mb-2 me-2">
               <ToggleButton
                 id={`toggle-${idx}`}
                 type="radio"
-                variant={selected === group ? "dark" : "outline-secondary"}
-                name="ageGroup"
-                value={group}
-                checked={selected === group}
+                name="frequency"
+                value={option}
+                checked={selected === option}
+                variant={selected === option ? "dark" : "outline-secondary"}
                 onChange={(e) => setSelected(e.currentTarget.value)}
               >
-                {group}
+                {option}
               </ToggleButton>
             </ButtonGroup>
           ))}
