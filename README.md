@@ -1,12 +1,62 @@
-# React + Vite
+# 🌍 Banwee – Bringing African Culture Closer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to **Banwee**, a survey-driven waitlist platform created to better understand the needs of the African diaspora when it comes to sourcing authentic cultural products.
 
-Currently, two official plugins are available:
+## 📋 About
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Banwee** is conducting a short survey to explore how African diasporans stay connected to their roots—through food, clothing, art, and other traditional products.
 
-## Expanding the ESLint configuration
+The feedback collected will guide the development of a platform that connects users with authentic African goods, offering easier logistics, better access, and community-driven solutions.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Purpose
+
+This waitlist site helps us:
+
+* Understand the demand for African cultural products.
+* Identify sourcing challenges (cost, authenticity, logistics).
+* Build a culturally rich, accessible product sourcing platform.
+* Notify interested users when we launch.
+
+## 🧪 What Users Do
+
+Users can:
+
+* Fill out a short survey (Country, Nationality, Age Group).
+* Share their connection to African culture.
+* Describe their product sourcing habits and preferences.
+* Join the waitlist with their email to stay updated.
+
+## 📦 Sections of the Survey
+
+1. **Basic Info**
+
+   * Country of Residence
+   * Country of Origin
+   * Age Group
+
+2. **Cultural Connection & Product Sourcing**
+
+   * Level of cultural connection
+   * Experience with sourcing products
+   * Sourcing frequency
+   * Preferred sourcing method
+
+3. **Platform Interest**
+
+   * Willingness to use a cultural sourcing platform
+   * Challenges faced when sourcing (e.g., authenticity, cost, logistics)
+   * Contact email for updates
+
+## 🛠 Tech Stack
+
+* **Frontend:** React, Bootstrap
+* **Routing:** React Router
+* **Deployment:** (You can add hosting platform like Vercel, Netlify, etc.)
+* **State Management:** useState, useEffect
+* **Form Flow:** Step-by-step form logic with conditional rendering
+
+## ✉️ Contact
+
+Have questions or want to collaborate?
+Reach out at: **[team@Banwee.com](mailto:team@Banwee.com)**
+
