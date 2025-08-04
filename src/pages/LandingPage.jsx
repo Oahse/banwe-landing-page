@@ -40,6 +40,9 @@ function LandingPage() {
   // Navigation Handlers
   const nextStep = () => {
     setStep((prev) => Math.min(prev + 1, steps.length - 1));
+    if (step === steps.length - 1){
+      setStep(0);
+    }
   };
 
   const prevStep = () => {

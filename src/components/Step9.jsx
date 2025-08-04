@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Form, Button, Row, Col, ButtonGroup, ToggleButton } from "react-bootstrap";
 
 export default function StepChallenges({ onNext, onBack }) {
