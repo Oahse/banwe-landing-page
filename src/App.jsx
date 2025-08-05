@@ -6,6 +6,7 @@ import AboutPage from './pages/AboutPage.jsx'
 import LandingPage from './pages/LandingPage.jsx'
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
+import SurveyAnalytics from './pages/DashBoard.jsx'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
         <HashRouter>
             <Routes>
                 <Route path="/" element={<LandingPage />} />
+                <Route path="/dashboard" element={<SurveyAnalytics />} />
                 <Route path="/about" element={<AboutPage />} />
             </Routes>
         </HashRouter>
