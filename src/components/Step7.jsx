@@ -25,8 +25,6 @@ export default function Step7({ onNext, onBack }) {
     const preference = selected === "Other" ? otherText : selected;
     onNext({shoppingmethod:preference}); 
   };
-  
-  
 
   return (
     <Form onSubmit={handleSubmit} className="text-center">

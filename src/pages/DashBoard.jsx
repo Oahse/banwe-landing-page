@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-// import { decryptData } from '../utils';
 
 import {
   Box,
@@ -34,7 +33,10 @@ import {
 } from 'recharts';
 
 import { CheckCircle, Cancel, Home, LocationCity, People, FilterList } from '@mui/icons-material';
-import {backendUrl} from '../constants.jsx';
+import { backendUrl } from '../constants.jsx';
+import DetailedSurveyTable from '../components/tables.jsx';
+import SummaryCards from '../components/summary.jsx';
+import SummaryCharts from '../components/charts.jsx';
 const COLOR_PALETTE = ['#d32f2f', '#1976d2', '#388e3c', '#fbc02d', '#7b1fa2', '#f57c00'];
 
 function SurveyAnalytics() {
@@ -64,7 +66,7 @@ function SurveyAnalytics() {
   useEffect(() => {
     axios.get(`${backendUrl}survey-items/`)
       .then(res => {
-        const decrypted = res.data.data // decryptData(res.data.data);
+        const decrypted = res.data.data; // decryptData(res.data.data);
         setItems(decrypted);
         setFilteredItems(decrypted);
         setLoading(false);
@@ -79,15 +81,10 @@ function SurveyAnalytics() {
     if (!items) return;
 
     let filtered = [...items];
-    if (ageGroupFilter) {
-      filtered = filtered.filter(item => item.age_group === ageGroupFilter);
-    }
-    if (countryFilter) {
-      filtered = filtered.filter(item => item.residence_country === countryFilter);
-    }
-    if (sourcingFromHomeFilter !== null) {
-      filtered = filtered.filter(item => item.sourcing_from_home === sourcingFromHomeFilter);
-    }
+    if (ageGroupFilter) filtered = filtered.filter(item => item.age_group === ageGroupFilter);
+    if (countryFilter) filtered = filtered.filter(item => item.residence_country === countryFilter);
+    if (sourcingFromHomeFilter !== null) filtered = filtered.filter(item => item.sourcing_from_home === sourcingFromHomeFilter);
+
     setFilteredItems(filtered);
   }, [ageGroupFilter, countryFilter, sourcingFromHomeFilter, items]);
 
@@ -102,14 +99,14 @@ function SurveyAnalytics() {
   if (!items || items.length === 0) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
-        <Typography variant="h6" color="textSecondary">No survey data available</Typography>
+        <Typography variant="h6" color="text.secondary">No survey data available</Typography>
       </Box>
     );
   }
 
   const safeFilteredItems = filteredItems || [];
 
-  // Helpers for badges with colors for age groups & sourcing
+  // Color helpers
   const ageGroupColors = {
     '18-24': 'primary',
     '25-34': 'success',
@@ -117,11 +114,6 @@ function SurveyAnalytics() {
     '45-54': 'info',
     '55+': 'error',
     Unknown: 'default',
-  };
-
-  const sourcingLabels = {
-    true: { label: 'From Home', color: 'success', icon: <Home fontSize="small" /> },
-    false: { label: 'Not From Home', color: 'error', icon: <LocationCity fontSize="small" /> },
   };
 
   // Aggregate data for charts
@@ -155,27 +147,31 @@ function SurveyAnalytics() {
       <Typography
         variant={isSmDown ? "h5" : "h4"}
         gutterBottom
-        sx={{ fontWeight: '700', color: theme.palette.text.primary, mb: 4 }}
+        sx={{ fontWeight: 800, color: theme.palette.text.primary, mb: 5, letterSpacing: '0.05em' }}
       >
         Survey Analytics Dashboard
       </Typography>
 
       {/* Filters */}
       <Paper
-        elevation={3}
+        elevation={8}
         sx={{
           p: 3,
-          mb: 5,
+          mb: 6,
           display: 'flex',
           flexWrap: 'wrap',
-          gap: 2,
+          gap: 3,
           alignItems: 'center',
-          background: 'linear-gradient(145deg, #f9f9f9, #e8e8e8)',
-          borderRadius: 3,
+          background: theme.palette.mode === 'light' 
+            ? 'linear-gradient(145deg, #fefefe, #e7e7e7)' 
+            : theme.palette.background.default,
+          borderRadius: 4,
+          boxShadow: theme.shadows[6],
+          userSelect: 'none',
         }}
       >
-        <FilterList sx={{ mr: 1, color: theme.palette.primary.main }} />
-        <Typography variant="subtitle1" sx={{ mr: 3, fontWeight: '600' }}>
+        <FilterList sx={{ mr: 1.5, color: theme.palette.primary.main, fontSize: 28 }} />
+        <Typography variant="subtitle1" sx={{ mr: 4, fontWeight: 700 }}>
           Filters
         </Typography>
 
@@ -186,6 +182,15 @@ function SurveyAnalytics() {
             value={ageGroupFilter}
             label="Age Group"
             onChange={e => setAgeGroupFilter(e.target.value)}
+            sx={{
+              borderRadius: 2,
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: theme.palette.primary.light,
+              },
+              '&:hover .MuiOutlinedInput-notchedOutline': {
+                borderColor: theme.palette.primary.main,
+              },
+            }}
           >
             <MenuItem value="">
               <em>All</em>
@@ -206,6 +211,15 @@ function SurveyAnalytics() {
             value={countryFilter}
             label="Residence Country"
             onChange={e => setCountryFilter(e.target.value)}
+            sx={{
+              borderRadius: 2,
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: theme.palette.primary.light,
+              },
+              '&:hover .MuiOutlinedInput-notchedOutline': {
+                borderColor: theme.palette.primary.main,
+              },
+            }}
           >
             <MenuItem value="">
               <em>All</em>
@@ -228,6 +242,7 @@ function SurveyAnalytics() {
             />
           }
           label="Sourcing from Home"
+          sx={{ userSelect: 'none' }}
         />
         <FormControlLabel
           control={
@@ -238,11 +253,12 @@ function SurveyAnalytics() {
             />
           }
           label="Not Sourcing from Home"
+          sx={{ userSelect: 'none' }}
         />
 
         <Button
-          variant="outlined"
-          color="primary"
+          variant="contained"
+          color="error"
           onClick={() => {
             setAgeGroupFilter('');
             setCountryFilter('');
@@ -251,10 +267,12 @@ function SurveyAnalytics() {
           sx={{
             ml: 'auto',
             textTransform: 'none',
-            fontWeight: 600,
+            fontWeight: 700,
+            borderRadius: 2,
+            boxShadow: theme.shadows[3],
             '&:hover': {
-              backgroundColor: theme.palette.primary.light,
-              color: theme.palette.primary.contrastText,
+              boxShadow: theme.shadows[8],
+              backgroundColor: theme.palette.error.dark,
             },
           }}
           startIcon={<Cancel />}
@@ -264,272 +282,13 @@ function SurveyAnalytics() {
       </Paper>
 
       {/* Summary Cards */}
-      <Grid container spacing={3} sx={{ mb: 5 }}>
-        {[
-          { label: 'Total Responses', value: safeFilteredItems.length, icon: <People fontSize="large" color="primary" /> },
-          {
-            label: 'Sourcing from Home',
-            value: sourcingData[0].value,
-            icon: <Home fontSize="large" sx={{ color: theme.palette.success.main }} />,
-          },
-          {
-            label: 'Not Sourcing from Home',
-            value: sourcingData[1].value,
-            icon: <LocationCity fontSize="large" sx={{ color: theme.palette.error.main }} />,
-          },
-          {
-            label: 'Unique Countries',
-            value: uniqueCountries.length,
-            icon: <LocationCity fontSize="large" color="info" />,
-          },
-        ].map(({ label, value, icon }, i) => (
-          <Grid key={i} item xs={12} sm={6} md={3}>
-            <Paper
-              elevation={6}
-              sx={{
-                p: 3,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 2,
-                borderRadius: 3,
-                background: 'linear-gradient(145deg, #fff, #f0f0f0)',
-                boxShadow: theme.shadows[6],
-                '&:hover': {
-                  boxShadow: theme.shadows[12],
-                  transform: 'translateY(-4px)',
-                  transition: 'all 0.3s ease',
-                },
-              }}
-            >
-              <Box sx={{ flexShrink: 0 }}>{icon}</Box>
-              <Box>
-                <Typography variant="subtitle2" color="textSecondary" sx={{ mb: 0.5 }}>
-                  {label}
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 700, color: theme.palette.primary.main }}>
-                  {value}
-                </Typography>
-              </Box>
-            </Paper>
-          </Grid>
-        ))}
-      </Grid>
-
+      <SummaryCards safeFilteredItems={safeFilteredItems} sourcingData={sourcingData} uniqueCountries={uniqueCountries}/>
+      
       {/* Charts */}
-      <Grid container spacing={4} justifyContent="center" sx={{ mb: 5 }}>
-        <Grid item xs={12} md={4} sx={{ height: isSmDown ? 320 : 360 }}>
-          <Typography variant="h6" gutterBottom sx={{ mb: 2, fontWeight: 600 }}>
-            Age Group Distribution
-          </Typography>
-          <ResponsiveContainer width="100%" height="85%">
-            <BarChart data={ageGroupData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-              <XAxis dataKey="name" stroke={theme.palette.text.secondary} />
-              <YAxis allowDecimals={false} stroke={theme.palette.text.secondary} />
-              <RechartsTooltip
-                cursor={{ fill: theme.palette.action.hover }}
-                contentStyle={{
-                  backgroundColor: theme.palette.background.paper,
-                  borderRadius: 8,
-                  color: theme.palette.text.primary,
-                  boxShadow: theme.shadows[3],
-                }}
-              />
-              <Bar dataKey="value" fill={theme.palette.primary.main} radius={[6, 6, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </Grid>
+      <SummaryCharts ageGroupData={ageGroupData} countryData={countryData} sourcingData={sourcingData} COLOR_PALETTE={COLOR_PALETTE}/>
+      
 
-        <Grid item xs={12} md={4} sx={{ height: isSmDown ? 320 : 360 }}>
-          <Typography variant="h6" gutterBottom sx={{ mb: 2, fontWeight: 600 }}>
-            Residence Country Distribution
-          </Typography>
-          <ResponsiveContainer width="100%" height="85%">
-            <PieChart>
-              <Pie
-                data={countryData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={isSmDown ? 90 : 110}
-                labelLine={false}
-                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-              >
-                {countryData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLOR_PALETTE[index % COLOR_PALETTE.length]} />
-                ))}
-              </Pie>
-              <Legend
-                verticalAlign="bottom"
-                height={36}
-                wrapperStyle={{ fontSize: 12, color: theme.palette.text.secondary }}
-              />
-              <RechartsTooltip
-                contentStyle={{
-                  backgroundColor: theme.palette.background.paper,
-                  borderRadius: 8,
-                  color: theme.palette.text.primary,
-                  boxShadow: theme.shadows[3],
-                }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-        </Grid>
-
-        <Grid item xs={12} md={4} sx={{ height: isSmDown ? 320 : 360 }}>
-          <Typography variant="h6" gutterBottom sx={{ mb: 2, fontWeight: 600 }}>
-            Sourcing from Home
-          </Typography>
-          <ResponsiveContainer width="100%" height="85%">
-            <PieChart>
-              <Pie
-                data={sourcingData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={isSmDown ? 90 : 110}
-                labelLine={false}
-                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-              >
-                {sourcingData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLOR_PALETTE[index % COLOR_PALETTE.length]} />
-                ))}
-              </Pie>
-              <Legend
-                verticalAlign="bottom"
-                height={36}
-                wrapperStyle={{ fontSize: 12, color: theme.palette.text.secondary }}
-              />
-              <RechartsTooltip
-                contentStyle={{
-                  backgroundColor: theme.palette.background.paper,
-                  borderRadius: 8,
-                  color: theme.palette.text.primary,
-                  boxShadow: theme.shadows[3],
-                }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-        </Grid>
-      </Grid>
-
-      {/* Data Table */}
-      <TableContainer
-        component={Paper}
-        sx={{
-          mb: 6,
-          boxShadow: theme.shadows[6],
-          borderRadius: 3,
-          backgroundColor: theme.palette.background.paper,
-        }}
-      >
-        <Table size={isSmDown ? "small" : "medium"} aria-label="survey data table">
-          <TableHead sx={{ backgroundColor: theme.palette.grey[100] }}>
-            <TableRow>
-              <TableCell>Email</TableCell>
-              <TableCell>Residence Country</TableCell>
-              <TableCell>Origin Country</TableCell>
-              <TableCell>Age Group</TableCell>
-              <TableCell>Connected</TableCell>
-              <TableCell>Sourcing from Home</TableCell>
-              <TableCell>Shopping Method</TableCell>
-              <TableCell>Shopping Challenges</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {safeFilteredItems.map((item, index) => (
-              <TableRow
-                key={item.id || index}
-                hover
-                sx={{
-                  cursor: 'default',
-                  '&:hover': {
-                    backgroundColor: theme.palette.action.hover,
-                  },
-                }}
-              >
-                <TableCell>
-                  <Tooltip title={item.email} arrow>
-                    <Typography
-                      noWrap
-                      sx={{
-                        maxWidth: 180,
-                        color: theme.palette.primary.dark,
-                        fontWeight: 500,
-                        cursor: 'text',
-                      }}
-                    >
-                      {item.email}
-                    </Typography>
-                  </Tooltip>
-                </TableCell>
-                <TableCell>
-                  <Chip label={item.residence_country} color="info" size="small" />
-                </TableCell>
-                <TableCell>
-                  <Chip label={item.origin_country} color="secondary" size="small" />
-                </TableCell>
-                <TableCell>
-                  <Chip
-                    label={item.age_group || 'Unknown'}
-                    color={ageGroupColors[item.age_group] || 'default'}
-                    size="small"
-                  />
-                </TableCell>
-                <TableCell>
-                  <Tooltip title="How connected" arrow>
-                    <Typography variant="body2" color="text.secondary" noWrap>
-                      {item.how_connected || 'N/A'}
-                    </Typography>
-                  </Tooltip>
-                </TableCell>
-                <TableCell>
-                  {item.sourcing_from_home ? (
-                    <Chip
-                      icon={<CheckCircle />}
-                      label="Yes"
-                      color="success"
-                      size="small"
-                      variant="outlined"
-                    />
-                  ) : (
-                    <Chip
-                      icon={<Cancel />}
-                      label="No"
-                      color="error"
-                      size="small"
-                      variant="outlined"
-                    />
-                  )}
-                </TableCell>
-                <TableCell>
-                  <Typography variant="body2" noWrap>
-                    {item.shoppingmethod || '-'}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="body2" noWrap sx={{ maxWidth: 200 }}>
-                    {item.shoppingchallenges || '-'}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    size="small"
-                    onClick={() => handleDelete(item.id)}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
-
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <DetailedSurveyTable data={safeFilteredItems} onDelete={handleDelete}/>
     </Container>
   );
 }
