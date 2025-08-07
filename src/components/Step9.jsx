@@ -29,9 +29,10 @@ export default function StepChallenges({ onNext, onBack }) {
     const allAnswers = [...selected];
     if (otherText.trim()) allAnswers.push(`Other: ${otherText.trim()}`);
 
-    console.log("Challenges selected:", allAnswers);
-    onNext(); // or pass allAnswers
+    // console.log("Challenges selected:", allAnswers);
+    onNext({shoppingchallenges:allAnswers}); // or pass allAnswers
   };
+  
 
   return (
     <Form onSubmit={handleSubmit} className="text-center">

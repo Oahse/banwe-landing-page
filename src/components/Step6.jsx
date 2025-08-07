@@ -12,10 +12,16 @@ export default function Step6({ onNext, onBack }) {
 
   const [selected, setSelected] = useState("");
 
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    onNext(); // Or send selected value up if needed
+    if (!selected) {
+      alert("Please select an option.");
+      return;
+    }
+    onNext({sourcing_from_home_freq:selected}); // or pass selected via onSubmit(selected)
   };
+  
 
   return (
     <Form onSubmit={handleSubmit} className="text-center">

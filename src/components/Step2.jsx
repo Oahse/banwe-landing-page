@@ -9,11 +9,12 @@ export default function Step2({ onNext, onBack }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (selectedOrigin) {
-      onNext();
+      onNext({origin_country:selectedOrigin});
     } else {
       alert("Please select your country of origin.");
     }
   };
+  
 
   return (
     <Form onSubmit={handleSubmit} className="text-center">

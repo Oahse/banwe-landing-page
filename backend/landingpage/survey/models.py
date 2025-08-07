@@ -18,8 +18,9 @@ class SurveyItem(models.Model):
     sourcing_from_home = models.BooleanField(default=False)
     sourcing_from_home_freq = models.CharField(max_length=100, blank=True, null=True)
     shoppingmethod = models.CharField(max_length=100)
+    shoppinplatform_preference = models.CharField(max_length=100, blank=True, null=True)
     shoppingmethod_description = models.TextField(blank=True, null=True)
-    shoppingchallenges = models.CharField(max_length=100)
+    shoppingchallenges = models.JSONField(null=True, blank=True)
     shoppingchallenges_description = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -36,6 +37,7 @@ class SurveyItem(models.Model):
             'sourcing_from_home_freq': self.sourcing_from_home_freq,
             'shoppingmethod': self.shoppingmethod,
             'shoppingmethod_description': self.shoppingmethod_description,
+            'shoppinplatform_preference':self.shoppinplatform_preference,
             'shoppingchallenges': self.shoppingchallenges,
             'shoppingchallenges_description': self.shoppingchallenges_description,
         }

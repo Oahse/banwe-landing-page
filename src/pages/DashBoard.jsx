@@ -34,7 +34,7 @@ import {
 } from 'recharts';
 
 import { CheckCircle, Cancel, Home, LocationCity, People, FilterList } from '@mui/icons-material';
-
+import {backendUrl} from '../constants.jsx';
 const COLOR_PALETTE = ['#d32f2f', '#1976d2', '#388e3c', '#fbc02d', '#7b1fa2', '#f57c00'];
 
 function SurveyAnalytics() {
@@ -49,7 +49,7 @@ function SurveyAnalytics() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/survey-items/')
+    axios.get(`${backendUrl}survey-items/`)
       .then(res => {
         const decrypted = res.data.data // decryptData(res.data.data);
         setItems(decrypted);

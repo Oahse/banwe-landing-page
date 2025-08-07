@@ -17,8 +17,9 @@ export default function Step4({ onNext, onBack }) {
       alert("Please select your level of connection.");
       return;
     }
-    onNext(); // or pass selected via onSubmit(selected)
+    onNext({how_connected:selected}); // or pass selected via onSubmit(selected)
   };
+  
 
   return (
     <Form onSubmit={handleSubmit} className="text-center">

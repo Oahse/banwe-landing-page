@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Row, Col, Button, Form } from 'react-bootstrap';
 
-export default function FinalStep({onNext}) {
+export default function FinalStep({onSubmit}) {
   const [email, setEmail] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,8 +15,10 @@ export default function FinalStep({onNext}) {
     console.log("User email submitted:", email);
     
     alert("Thank you! We'll keep you updated.");
-    onNext(); 
+    // onNext({email:email}); 
+    onSubmit(email)
   };
+  
 
   return (
     <Form onSubmit={handleSubmit} className="text-center">

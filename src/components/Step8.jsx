@@ -9,14 +9,15 @@ export default function Step8({ onNext, onBack }) {
     setSelected(value);
   };
 
+  
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!selected) {
-      alert("Please select an option.");
-      return;
-    }
-    onNext(); // Or pass selected if needed
-  };
+      e.preventDefault();
+      if (!selected) {
+        alert("Please select an option.");
+        return;
+      }
+      onNext({shoppinplatform_preference:selected}); // or pass selected via onSubmit(selected)
+    };
 
   return (
     <Form onSubmit={handleSubmit} className="text-center">

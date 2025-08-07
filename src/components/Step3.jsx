@@ -4,13 +4,12 @@ import { Form, Button, Row, Col, ButtonGroup, ToggleButton } from "react-bootstr
 export default function Step3({ onNext, onBack }) {
   const ageGroups = [
     "Under 18",
-    "18–24",
-    "25–34",
-    "35–44",
-    "45–54",
-    "55 and above",
+    "18_24",
+    "25_34",
+    "35_44",
+    "45_54",
+    "55_above",
   ];
-
   const [selected, setSelected] = useState(""); // Single value
 
   const handleSubmit = (e) => {
@@ -19,8 +18,9 @@ export default function Step3({ onNext, onBack }) {
       alert("Please select your age group.");
       return;
     }
-    onNext(); // or pass selected with onSubmit(selected)
+    onNext({age_group:selected}); // or pass selected with onSubmit(selected)
   };
+  
 
   return (
     <Form onSubmit={handleSubmit} className="text-center">

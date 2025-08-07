@@ -12,8 +12,10 @@ export default function Step5({ onNext, onBack }) {
       alert("Please select an option.");
       return;
     }
-    onNext(); // or pass selected via onSubmit(selected)
+    onNext({sourcing_from_home:selected}); // or pass selected via onSubmit(selected)
   };
+  
+  
 
   return (
     <Form onSubmit={handleSubmit} className="text-center">

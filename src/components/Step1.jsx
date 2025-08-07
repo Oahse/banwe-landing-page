@@ -11,11 +11,12 @@ export default function Step1({ onNext, onBack }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (selectedCountry) {
-      onNext();
+      onNext({residence_country:selectedCountry});
     } else {
       alert("Please select a country.");
     }
   };
+  
   return (
     <Form
       onSubmit={handleSubmit}

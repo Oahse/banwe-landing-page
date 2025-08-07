@@ -4,7 +4,7 @@ import { Form, Button, Row, Col, ButtonGroup, ToggleButton } from "react-bootstr
 export default function Step7({ onNext, onBack }) {
   const options = [
     "Buying from local African stores in your area",
-    "Sourcing directly from your home country if logistics was way cheaper than expected.",
+    "Sourcing directly from your home country If the overall cost was way cheaper.",
     "Other",
   ];
 
@@ -23,8 +23,10 @@ export default function Step7({ onNext, onBack }) {
     }
     // Pass data upward if needed:
     const preference = selected === "Other" ? otherText : selected;
-    onNext(preference); 
+    onNext({shoppingmethod:preference}); 
   };
+  
+  
 
   return (
     <Form onSubmit={handleSubmit} className="text-center">

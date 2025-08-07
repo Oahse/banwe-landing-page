@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Row, Col, Container } from "react-bootstrap";
-
+import axios from 'axios';
 import Header from "../components/Header";
 import CoverVideo from "../assets/cover-video.mp4";
-
+import {backendUrl} from '../constants.jsx';
 import Intro from "../components/Intro";
 import Step1 from "../components/Step1";
 import Step2 from "../components/Step2";
@@ -23,7 +23,7 @@ function LandingPage() {
   const steps = [Intro, Step1, Step2, Step3, Step4, Step5,Step6, Step7,Step8, Step9, FinalStep];
   const [step, setStep] = useState(0);
   const [currentComponent, setCurrentComponent] = useState("Home");
-
+  const [form, setForm] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -38,21 +38,45 @@ function LandingPage() {
   }, [location, navigate]);
 
   // Navigation Handlers
-  const nextStep = () => {
+  const nextStep = (formItem) => {
     setStep((prev) => Math.min(prev + 1, steps.length - 1));
     if (step === steps.length - 1){
       setStep(0);
     }
+    // console.log(form, formItem)
+    setForm((prevForm) => ({
+      ...prevForm,
+      ...formItem,
+    }));
   };
 
   const prevStep = () => {
     setStep((prev) => Math.max(prev - 1, 0));
+    
   };
 
-  const submitForm = () => {
+  const submitForm = (email) => {
     console.log("Form submitted");
-    nextStep();
+    console.log({ ...form, email });
+
+    const surveyData = { ...form, email };
+
+    axios.post(`${backendUrl}survey-items/`, surveyData, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      .then(response => {
+        console.log('Success:', response.data);
+        nextStep();  // Move to next step only after success
+      })
+      .catch(error => {
+        console.error('Error:', error.response ? error.response.data : error.message);
+        alert(error.response ? error.response.data : error.message)
+        // optionally handle errors here, e.g., show a message
+      });
   };
+
 
   const onBack = () => {
     setCurrentComponent("Home");
@@ -64,7 +88,9 @@ function LandingPage() {
       case "AccessStep":
         return <AccessStep onBack={onBack} setCurrentComponent={setCurrentComponent} />;
       case "FinalStep":
-        return <FinalStep />;
+        return <FinalStep onNext={nextStep}
+            onBack={prevStep}
+            onSubmit={submitForm}/>;
       case "Home":
       default:
         return (
