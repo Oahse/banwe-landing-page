@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import pymysql, os
 from pathlib import Path
 
+pymysql.install_as_MySQLdb()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-utzth^@kc!g%*&4^&rv#60rh_-$z@_5%9_qfvx5vd(2yl73a6&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['oscaroguledo.pythonanywhere.com']
+ALLOWED_HOSTS = ['oscaroguledo.pythonanywhere.com','127.0.0.1','localhost']
 
 
 # Application definition
@@ -76,13 +77,30 @@ WSGI_APPLICATION = 'landingpage.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# Detect if we're running on PythonAnywhere
+ON_PYTHONANYWHERE = 'PYTHONANYWHERE_DOMAIN' in os.environ
 
+if ON_PYTHONANYWHERE:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'oscaroguledo$default',
+            'USER': 'oscaroguledo',
+            'PASSWORD': 'noqjyh-5hirda-xeMjuk',
+            'HOST': 'oscaroguledo.mysql.pythonanywhere-services.com',
+            'PORT': '3306',
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
+
+# db pword for sql----noqjyh-5hirda-xeMjuk
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -125,6 +143,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",'https://oahse.github.io/banwe-landing-page/'
+    "http://localhost:5173",'https://oahse.github.io'
 ]
 # CORS_ALLOW_ALL_ORIGINS = True
