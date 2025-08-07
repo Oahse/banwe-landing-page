@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { decryptData } from '../utils';
+// import { decryptData } from '../utils';
 
 import {
   Box,
@@ -51,7 +51,7 @@ function SurveyAnalytics() {
   useEffect(() => {
     axios.get('http://localhost:8000/api/survey-items/')
       .then(res => {
-        const decrypted = decryptData(res.data.data);
+        const decrypted = res.data.data // decryptData(res.data.data);
         setItems(decrypted);
         setFilteredItems(decrypted);
         setLoading(false);

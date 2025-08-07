@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import SurveyItem
 from .serializers import SurveyItemSerializer
-from .utils import encrypt_data, ENCRYPTION_KEY
+# from .utils import encrypt_data, ENCRYPTION_KEY
 
 
 # Create your views here.
@@ -23,7 +23,8 @@ class SurveyItemListCreate(generics.ListCreateAPIView):
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
-        encrypted = encrypt_data(response.data, ENCRYPTION_KEY)
+        # encrypted = encrypt_data(response.data, ENCRYPTION_KEY)
+        encrypted = response.data
         return Response({'data': encrypted})
 
 class SurveyItemDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -32,5 +33,6 @@ class SurveyItemDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         response = super().retrieve(request, *args, **kwargs)
-        encrypted = encrypt_data(response.data, ENCRYPTION_KEY)
+        # encrypted = encrypt_data(response.data, ENCRYPTION_KEY)
+        encrypted = response.data
         return Response({'data': encrypted})
