@@ -48,6 +48,19 @@ function SurveyAnalytics() {
   const [sourcingFromHomeFilter, setSourcingFromHomeFilter] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const handleDelete = (id) => {
+    if (!window.confirm("Are you sure you want to delete this item?")) return;
+
+    axios.delete(`${backendUrl}survey-items/${id}/`)
+      .then(() => {
+        setItems(prev => prev.filter(item => item.id !== id));
+        setFilteredItems(prev => prev.filter(item => item.id !== id));
+      })
+      .catch(err => {
+        console.error("Error deleting item:", err.response ? err.response.data : err.message);
+      });
+  };
+
   useEffect(() => {
     axios.get(`${backendUrl}survey-items/`)
       .then(res => {
@@ -422,6 +435,7 @@ function SurveyAnalytics() {
               <TableCell>Sourcing from Home</TableCell>
               <TableCell>Shopping Method</TableCell>
               <TableCell>Shopping Challenges</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -500,6 +514,17 @@ function SurveyAnalytics() {
                     {item.shoppingchallenges || '-'}
                   </Typography>
                 </TableCell>
+                <TableCell>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    size="small"
+                    onClick={() => handleDelete(item.id)}
+                  >
+                    Delete
+                  </Button>
+                </TableCell>
+
               </TableRow>
             ))}
           </TableBody>
