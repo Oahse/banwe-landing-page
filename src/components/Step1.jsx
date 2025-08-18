@@ -1,21 +1,24 @@
 import { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import { getNames } from "country-list";
 
 
 export default function Step1({ onNext, onBack }) {
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const countries = getNames(); // Get all country names
-
-  
+  const [email, setEmail] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (selectedCountry) {
-      onNext({residence_country:selectedCountry});
-    } else {
-      alert("Please select a country.");
+
+    if (!email || !email.includes("@")) {
+      alert("Please enter a valid email address.");
+      return;
     }
+
+    // You can send this email to your backend or waitlist service here
+    console.log("User email submitted:", email);
+    
+    // onNext({email:email}); 
+    onNext(email);
   };
+  
   
   return (
     <Form
@@ -31,21 +34,19 @@ export default function Step1({ onNext, onBack }) {
 
             <Col sm={12} md={12} lg={12} className="mb-3">
                 <h4 className="step-header">
-                  What is your Country of residence
+                  What is your Email
                 </h4>
 
-                <Form.Select
-                  value={selectedCountry}
-                  onChange={(e) => setSelectedCountry(e.target.value)}
+                <Col sm={12} className="mb-3">
+                <Form.Control
+                  type="email"
+                  placeholder="Enter your email address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="mt-3"
                   required
-                >
-                  <option value="">-- Select a country --</option>
-                  {countries.map((country, i) => (
-                    <option key={i} value={country}>
-                      {country}
-                    </option>
-                  ))}
-                </Form.Select>
+                />
+              </Col>
                           
             </Col>
 

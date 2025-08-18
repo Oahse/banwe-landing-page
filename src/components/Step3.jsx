@@ -1,24 +1,18 @@
 import React, { useState } from "react";
-import { Form, Button, Row, Col, ButtonGroup, ToggleButton } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
+import { getNames } from "country-list";
 
 export default function Step3({ onNext, onBack }) {
-  const ageGroups = [
-    "Under 18",
-    "18_24",
-    "25_34",
-    "35_44",
-    "45_54",
-    "55_above",
-  ];
-  const [selected, setSelected] = useState(""); // Single value
+  const [selectedOrigin, setSelectedOrigin] = useState("");
+  const countries = getNames(); // List of all countries
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!selected) {
-      alert("Please select your age group.");
-      return;
+    if (selectedOrigin) {
+      onNext({origin_country:selectedOrigin});
+    } else {
+      alert("Please select your country of origin.");
     }
-    onNext({age_group:selected}); // or pass selected with onSubmit(selected)
   };
   
 
@@ -37,23 +31,20 @@ export default function Step3({ onNext, onBack }) {
         </Col>
 
         <Col sm={12} className="mb-3">
-          <h4 className="step-header">Select your Age Group</h4>
+          <h4 className="step-header">What is your Country of Origin (Nationality)?</h4>
 
-          {ageGroups.map((group, idx) => (
-            <ButtonGroup key={idx} className="mb-2 me-2">
-              <ToggleButton
-                id={`toggle-${idx}`}
-                type="radio"
-                variant={selected === group ? "dark" : "outline-secondary"}
-                name="ageGroup"
-                value={group}
-                checked={selected === group}
-                onChange={(e) => setSelected(e.currentTarget.value)}
-              >
-                {group}
-              </ToggleButton>
-            </ButtonGroup>
-          ))}
+          <Form.Select
+            value={selectedOrigin}
+            onChange={(e) => setSelectedOrigin(e.target.value)}
+            required
+          >
+            <option value="">-- Select your country of origin --</option>
+            {countries.map((country, i) => (
+              <option key={i} value={country}>
+                {country}
+              </option>
+            ))}
+          </Form.Select>
         </Col>
 
         <Col sm={12}>

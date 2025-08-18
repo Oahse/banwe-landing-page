@@ -1,55 +1,95 @@
 import { useState } from "react";
-import { Row, Col, Button, Form } from 'react-bootstrap';
+import { Form, Button, Row, Col, ButtonGroup, ToggleButton } from "react-bootstrap";
 
-export default function FinalStep({onSubmit}) {
-  const [email, setEmail] = useState("");
+export default function StepChallenges({ onSubmit, onBack }) {
+  const challenges = [
+    "Lack of authenticity (ojoro)",
+    "Cost and logistics",
+    "Stress and time",
+  ];
+
+  const [selected, setSelected] = useState([]);
+  const [otherText, setOtherText] = useState("");
+
+  const handleToggle = (value) => {
+    setSelected((prev) =>
+      prev.includes(value)
+        ? prev.filter((v) => v !== value)
+        : [...prev, value]
+    );
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!email || !email.includes("@")) {
-      alert("Please enter a valid email address.");
+    if (selected.length === 0 && otherText.trim() === "") {
+      alert("Please select at least one challenge or specify another.");
       return;
     }
+    // Combine selected with otherText if needed
+    const allAnswers = [...selected];
+    if (otherText.trim()) allAnswers.push(`Other: ${otherText.trim()}`);
 
-    // You can send this email to your backend or waitlist service here
-    console.log("User email submitted:", email);
-    
+    // console.log("Challenges selected:", allAnswers);
+    // onNext({shoppingchallenges:allAnswers}); // or pass allAnswers
     alert("Thank you! We'll keep you updated.");
     // onNext({email:email}); 
-    onSubmit(email)
+    onSubmit({shoppingchallenges:allAnswers})
   };
   
 
   return (
     <Form onSubmit={handleSubmit} className="text-center">
       <Row>
-        
-        <Col sm={12} className="mb-3">
-          <h2>Welcome to Banwe</h2>
-          <p>
-            Thank you for joining our wait list! <br />
-            You will be notified with all updates as we get ready to launch a revolutionary platform for fresh food products.
-          </p>
-        </Col>
-
-        <Col sm={12} className="mb-3">
-          <Form.Control
-            type="email"
-            placeholder="Enter your email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="mt-3"
-            required
-          />
-        </Col>
-
-        <Col className="mb-3">
+        <Col sm={12} className="text-start mb-3">
           <Button
-            type="submit"
-            className="tf-btn radius-3 btn-fill animate-hover-btn justify-content-center"
+            type="button"
+            onClick={onBack}
+            className="rounded-5"
+            variant="outline-light"
           >
-            Stay Tuned
+            <i className="bi bi-arrow-90deg-left"></i>
           </Button>
+        </Col>
+
+        <Col sm={12} className="mb-4">
+          <p className="step-header">
+            What are the biggest challenges you face when trying to source African cultural products?
+          </p>
+
+          {challenges.map((challenge, idx) => (
+            <ButtonGroup key={idx} className="mb-2 me-2">
+              <ToggleButton
+                id={`challenge-${idx}`}
+                type="checkbox"
+                variant={selected.includes(challenge) ? "dark" : "outline-secondary"}
+                checked={selected.includes(challenge)}
+                value={challenge}
+                onChange={() => handleToggle(challenge)}
+              >
+                {challenge}
+              </ToggleButton>
+            </ButtonGroup>
+          ))}
+
+          <Form.Group className="mt-3">
+            <Form.Label>Other (please specify):</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              placeholder="Write your answer here"
+              value={otherText}
+              onChange={(e) => setOtherText(e.target.value)}
+            />
+          </Form.Group>
+        </Col>
+
+        <Col sm={12}>
+          <Button
+            as="input"
+            type="submit"
+            value="Thank You and Stay Tuned"
+            className="tf-btn radius-3 btn-fill animate-hover-btn justify-content-center"
+          />
         </Col>
       </Row>
     </Form>

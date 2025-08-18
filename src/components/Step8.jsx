@@ -1,23 +1,30 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Form, Button, Row, Col, ButtonGroup, ToggleButton } from "react-bootstrap";
 
 export default function Step8({ onNext, onBack }) {
-  const options = ["Yes", "No", "Maybe"];
+  const options = [
+    "Buying from local African stores in your area",
+    "Sourcing directly from your home country If the overall cost was way cheaper.",
+    "Other",
+  ];
+
   const [selected, setSelected] = useState("");
+  const [otherText, setOtherText] = useState("");
 
-  const handleToggle = (value) => {
-    setSelected(value);
-  };
-
-  
   const handleSubmit = (e) => {
-      e.preventDefault();
-      if (!selected) {
-        alert("Please select an option.");
-        return;
-      }
-      onNext({shoppinplatform_preference:selected}); // or pass selected via onSubmit(selected)
-    };
+    e.preventDefault();
+    if (!selected) {
+      alert("Please select an option.");
+      return;
+    }
+    if (selected === "Other" && otherText.trim() === "") {
+      alert("Please specify your preference.");
+      return;
+    }
+    // Pass data upward if needed:
+    const preference = selected === "Other" ? otherText : selected;
+    onNext({shoppingmethod:preference}); 
+  };
 
   return (
     <Form onSubmit={handleSubmit} className="text-center">
@@ -33,27 +40,41 @@ export default function Step8({ onNext, onBack }) {
           </Button>
         </Col>
 
-        <Col sm={12} className="mb-4">
-          <p className="step-header">
-            If there was a platform that gives you the opportunity to get culturally specific products from Africa, <br/> 
-            maintaining their authenticity and delivered with cheaper logistics, would you be interested in using it?
-          </p>
+        <Col sm={12} className="mb-3">
+          <h2 className="step-header">
+            Would you prefer:
+          </h2>
 
-          {options.map((option, idx) => (
-            <ButtonGroup key={idx} className="mb-2 me-2">
+          <ButtonGroup vertical>
+            {options.map((option, idx) => (
               <ToggleButton
+                key={idx}
                 id={`toggle-${idx}`}
                 type="radio"
-                variant={selected === option ? "dark" : "outline-secondary"}
-                name="interest"
+                name="preference"
                 value={option}
                 checked={selected === option}
-                onChange={() => handleToggle(option)}
+                variant={selected === option ? "dark" : "outline-secondary"}
+                onChange={(e) => setSelected(e.currentTarget.value)}
+                className="mb-2"
               >
                 {option}
               </ToggleButton>
-            </ButtonGroup>
-          ))}
+            ))}
+          </ButtonGroup>
+
+          {selected === "Other" && (
+            <Form.Control
+              as="textarea"
+              rows={5}
+              placeholder="Please specify"
+              
+              value={otherText}
+              onChange={(e) => setOtherText(e.target.value)}
+              className="mt-3"
+              required
+            />
+          )}
         </Col>
 
         <Col sm={12}>

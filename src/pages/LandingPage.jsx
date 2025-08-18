@@ -55,11 +55,11 @@ function LandingPage() {
     
   };
 
-  const submitForm = (email) => {
+  const submitForm = (item) => {
     console.log("Form submitted");
-    console.log({ ...form, email });
+    console.log({ ...form, item });
 
-    const surveyData = { ...form, email };
+    const surveyData = { ...form, item };
 
     axios.post(`${backendUrl}survey-items/`, surveyData, {
         headers: {

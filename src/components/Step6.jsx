@@ -2,25 +2,19 @@ import React, { useState } from "react";
 import { Form, Button, Row, Col, ButtonGroup, ToggleButton } from "react-bootstrap";
 
 export default function Step6({ onNext, onBack }) {
-  const frequencyOptions = [
-    "Weekly",
-    "Monthly",
-    "Occasionally",
-    "Rarely",
-    "Daily",
-  ];
+  const options = ["Yes", "No"];
 
   const [selected, setSelected] = useState("");
 
-  
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!selected) {
       alert("Please select an option.");
       return;
     }
-    onNext({sourcing_from_home_freq:selected}); // or pass selected via onSubmit(selected)
+    onNext({sourcing_from_home:selected}); // or pass selected via onSubmit(selected)
   };
+  
   
 
   return (
@@ -38,17 +32,16 @@ export default function Step6({ onNext, onBack }) {
         </Col>
 
         <Col sm={12} className="mb-3">
-          <small> Optional </small>
-          <h2 className="step-header">
-            If yes, How often do you try to source such products?
-          </h2>
-          
-          {frequencyOptions.map((option, idx) => (
+          <h4 className="step-header">
+            Have you ever tried sourcing a product from your home country?
+          </h4>
+
+          {options.map((option, idx) => (
             <ButtonGroup key={idx} className="mb-2 me-2">
               <ToggleButton
                 id={`toggle-${idx}`}
                 type="radio"
-                name="frequency"
+                name="sourcedProduct"
                 value={option}
                 checked={selected === option}
                 variant={selected === option ? "dark" : "outline-secondary"}

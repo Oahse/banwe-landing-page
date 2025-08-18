@@ -2,22 +2,23 @@ import React, { useState } from "react";
 import { Form, Button, Row, Col, ButtonGroup, ToggleButton } from "react-bootstrap";
 
 export default function Step4({ onNext, onBack }) {
-  const options = [
-    "Very connected",
-    "Somewhat connected",
-    "Not very connected",
-    "Not connected at all",
+  const ageGroups = [
+    "Under 18",
+    "18_24",
+    "25_34",
+    "35_44",
+    "45_54",
+    "55_above",
   ];
-
-  const [selected, setSelected] = useState(""); // Single selection
+  const [selected, setSelected] = useState(""); // Single value
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!selected) {
-      alert("Please select your level of connection.");
+      alert("Please select your age group.");
       return;
     }
-    onNext({how_connected:selected}); // or pass selected via onSubmit(selected)
+    onNext({age_group:selected}); // or pass selected with onSubmit(selected)
   };
   
 
@@ -36,20 +37,20 @@ export default function Step4({ onNext, onBack }) {
         </Col>
 
         <Col sm={12} className="mb-3">
-          <h4 className="step-header">How connected are you to your African culture?</h4>
+          <h4 className="step-header">Select your Age Group</h4>
 
-          {options.map((option, idx) => (
+          {ageGroups.map((group, idx) => (
             <ButtonGroup key={idx} className="mb-2 me-2">
               <ToggleButton
                 id={`toggle-${idx}`}
                 type="radio"
-                name="connectionLevel"
-                value={option}
-                checked={selected === option}
-                variant={selected === option ? "dark" : "outline-secondary"}
+                variant={selected === group ? "dark" : "outline-secondary"}
+                name="ageGroup"
+                value={group}
+                checked={selected === group}
                 onChange={(e) => setSelected(e.currentTarget.value)}
               >
-                {option}
+                {group}
               </ToggleButton>
             </ButtonGroup>
           ))}

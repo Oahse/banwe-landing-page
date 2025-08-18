@@ -2,19 +2,23 @@ import React, { useState } from "react";
 import { Form, Button, Row, Col, ButtonGroup, ToggleButton } from "react-bootstrap";
 
 export default function Step5({ onNext, onBack }) {
-  const options = ["Yes", "No"];
+  const options = [
+    "Very connected",
+    "Somewhat connected",
+    "Not very connected",
+    "Not connected at all",
+  ];
 
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState(""); // Single selection
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!selected) {
-      alert("Please select an option.");
+      alert("Please select your level of connection.");
       return;
     }
-    onNext({sourcing_from_home:selected}); // or pass selected via onSubmit(selected)
+    onNext({how_connected:selected}); // or pass selected via onSubmit(selected)
   };
-  
   
 
   return (
@@ -32,16 +36,14 @@ export default function Step5({ onNext, onBack }) {
         </Col>
 
         <Col sm={12} className="mb-3">
-          <h4 className="step-header">
-            Have you ever tried sourcing a product from your home country?
-          </h4>
+          <h4 className="step-header">How connected are you to your African culture?</h4>
 
           {options.map((option, idx) => (
             <ButtonGroup key={idx} className="mb-2 me-2">
               <ToggleButton
                 id={`toggle-${idx}`}
                 type="radio"
-                name="sourcedProduct"
+                name="connectionLevel"
                 value={option}
                 checked={selected === option}
                 variant={selected === option ? "dark" : "outline-secondary"}
