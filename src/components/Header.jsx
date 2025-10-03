@@ -1,16 +1,16 @@
 import React from 'react';
-import logo from '../assets/banwe_logo_text_green.png';
+import logo from '../assets/banwee_logo_text_green.png';
 import { Navbar, Container, Nav } from 'react-bootstrap';
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation} from 'react-router-dom'
 
-function Header({ setCurrentComponent }) {
+function Header() {
     const location = useLocation();
     // const navigate = useNavigate();
     return (
       <div style={{ width: "100%" }}>
         <Navbar className="" variant="dark">
           <Container>
-            <Navbar.Brand href="/banwe-landing-page/">
+            <Navbar.Brand href="/banwee-landing-page/">
               <img src={logo} alt="oahse Logo" width="120px" />
             </Navbar.Brand>
             <Nav className="me-auto">

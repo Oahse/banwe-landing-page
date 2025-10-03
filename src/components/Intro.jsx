@@ -40,11 +40,8 @@ export default function Intro({ onNext }) {
 
         <p className="lead mb-4">
           
-          We’re doing a short survey to learn how people in the African diaspora
-          stay connected to their roots and find cultural products they love.
-          <br />
-          Your responses will help shape a platform that better serves your cultural and logistical needs.
-        </p>
+          We're on a mission to connect the African diaspora with the vibrant culture and authentic products they love. Share your journey in our quick survey – tell us how you stay connected to your roots, from traditions and community to finding the music, food, fashion, and products that feel like home. Your insights will help us create a platform that truly celebrates your cultural identity and makes it easier to access the treasures that keep you connected.
+          </p>
 
         
         <Button

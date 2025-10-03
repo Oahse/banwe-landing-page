@@ -1,3 +1,6 @@
+@import './assets/icon/style.css';
+
+
 *{
     margin: 0;
     padding: 0;
@@ -147,32 +150,4 @@ html{
 
 .btn-fill {
   background-color: var(--main) !important;
-  border: 1px solid var(--main) !important;
-  color: var(--white) !important;
-}
-.tf-btn:hover,
-.btn-fill:hover,
-.btn-outline-secondary:hover,
-.btn-dark {
-  background-color: var(--success) !important;
-  border-color:  var(--success) !important;
-}
-.btn-outline-secondary {
-  border-radius: 3px !important;
-  color: white !important;
-}
-.animate-hover-btn {
-  position: relative !important;
-  overflow: hidden !important;
-}
-
-.radius-3 {
-  border-radius: 3px !important;
-}
-
-.justify-content-center {
-  justify-content: center!important;
-}
-.w-100 {
-  width: 100%!important;
 }

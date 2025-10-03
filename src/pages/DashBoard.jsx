@@ -25,6 +25,7 @@ import {
   Tooltip,
   useTheme,
   useMediaQuery,
+  Skeleton,
 } from '@mui/material';
 
 import {
@@ -90,9 +91,34 @@ function SurveyAnalytics() {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
-        <CircularProgress size={60} color="primary" />
-      </Box>
+      <Container maxWidth="xl" sx={{ py: 5 }}>
+        <Skeleton variant="text" width="60%" height={60} sx={{ mb: 5 }} />
+
+        {/* Filters Skeleton */}
+        <Skeleton variant="rectangular" height={120} sx={{ mb: 6, borderRadius: 4 }} />
+
+        {/* Summary Cards Skeleton */}
+        <Grid container spacing={2} sx={{ mb: 6 }}>
+          {[...Array(4)].map((_, i) => (
+            <Grid item xs={12} sm={6} md={3} key={i}>
+              <Skeleton variant="rectangular" height={100} sx={{ borderRadius: 2 }} />
+            </Grid>
+          ))}
+        </Grid>
+
+        {/* Charts Skeleton */}
+        <Grid container spacing={2} sx={{ mb: 6 }}>
+          <Grid item xs={12} md={6}>
+            <Skeleton variant="rectangular" height={300} sx={{ borderRadius: 2 }} />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Skeleton variant="rectangular" height={300} sx={{ borderRadius: 2 }} />
+          </Grid>
+        </Grid>
+
+        {/* Table Skeleton */}
+        <Skeleton variant="rectangular" height={400} sx={{ borderRadius: 2 }} />
+      </Container>
     );
   }
 
